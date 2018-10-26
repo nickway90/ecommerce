@@ -16,6 +16,18 @@ class Cart(models.Model):
     session_id = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=datetime.now, blank=True)
 
+    def item_count(self):
+        ct = 0
+        for cart_item in self.cart_items.all():
+            ct = ct + cart_item.qty
+        return ct
+
+    def total(self):
+        t = 0
+        for cart_item in self.cart_items.all():
+            t = t + (cart_item.qty * cart_item.item.price)
+        return t
+
     def __str__(self):
         return 'Cart'
 
