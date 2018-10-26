@@ -5,5 +5,6 @@
 <p>Name: {{item.name}}</p>
 <p>Description: {{item.description}}</p>
 <p>Price: {{item.price}}</p>
+<p><a href="{% url 'item' item.id %}">View</a></p>
 <hr>
 {% endfor %}
