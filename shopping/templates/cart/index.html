@@ -1,16 +1,18 @@
 <h1>Shopping Cart</h1>
+<p><a href="{% url 'items' %}">View Items</a></p>
 <p>{{cart.session_id}}</p>
 <p>{{cart.created_at}}</p>
 <p>Items: {{cart.item_count}}</p>
 <p>Total: {{cart.total}}</p>
 <hr>
 {% for cart_item in cart.cart_items.all %}
-<p>{{cart_item}}</p>
 <p>SKU: {{cart_item.item.sku}}</p>
 <p>Name: {{cart_item.item.name}}</p>
 <p>Description: {{cart_item.item.description}}</p>
 <p>Price: {{cart_item.item.price}}</p>
 <p>Quantity: {{cart_item.qty}}</p>
-<p><a href="{% url 'remove_item' cart_item.id %}">Remove Item</a></p>
+<p><a href="{% url 'add_item' cart_item.item.id %}">Add One</a></p>
+<p><a href="{% url 'remove_item' cart_item.id %}">Remove One</a></p>
+<p><a href="{% url 'remove_all' cart_item.id %}">Remove All</a></p>
 <hr>
 {% endfor %}

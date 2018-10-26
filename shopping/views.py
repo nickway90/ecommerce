@@ -36,10 +36,21 @@ def add_item(request, id):
     except Cart.DoesNotExist:
         cart = Cart.objects.create(session_id=request.session.session_key)
     CartItem.objects.get_or_create(cart=cart, item=item)
-    CartItem.objects.filter(cart=cart, item=item).update(qty = F('qty')+1)
+    CartItem.objects.filter(cart=cart, item=item).update(qty=F('qty')+1)
     return redirect('cart')
 
+
 def remove_item(request, id):
+    cart_item = get_object_or_404(CartItem, pk=id)
+    if cart_item.qty <= 1:
+        cart_item.delete()
+    else:
+        cart_item.qty = cart_item.qty - 1
+        cart_item.save()
+    return redirect('cart')
+
+
+def remove_all(request, id):
     cart_item = get_object_or_404(CartItem, pk=id)
     cart_item.delete()
     return redirect('cart')
