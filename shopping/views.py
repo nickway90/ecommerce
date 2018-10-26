@@ -54,3 +54,8 @@ def remove_all(request, id):
     cart_item = get_object_or_404(CartItem, pk=id)
     cart_item.delete()
     return redirect('cart')
+
+
+def checkout(request):
+    cart = get_object_or_404(Cart, session_id=request.session.session_key)
+    return render(request, 'checkout/index.html', {'cart': cart})

@@ -4,6 +4,7 @@
 <p>{{cart.created_at}}</p>
 <p>Items: {{cart.item_count}}</p>
 <p>Total: {{cart.total}}</p>
+<p><a href="{% url 'checkout' %}">Checkout</a></p>
 <hr>
 {% for cart_item in cart.cart_items.all %}
 <p>SKU: {{cart_item.item.sku}}</p>
