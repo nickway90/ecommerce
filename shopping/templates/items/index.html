@@ -1,1 +1,10 @@
-<p>items</p>
+<h1>Items</h1>
+
+<hr>
+{% for item in items %}
+<p>SKU: {{item.sku}}</p>
+<p>Name: {{item.name}}</p>
+<p>Description: {{item.description}}</p>
+<p>Price: {{item.price}}</p>
+<hr>
+{% endfor %}
