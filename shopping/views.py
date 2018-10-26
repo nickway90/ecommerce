@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import F
 from .models import Item, Cart, CartItem
 
 
@@ -34,7 +35,8 @@ def add_item(request, id):
         cart = Cart.objects.get(session_id=request.session.session_key)
     except Cart.DoesNotExist:
         cart = Cart.objects.create(session_id=request.session.session_key)
-    cart_item = CartItem.objects.create(cart=cart, item=item)
+    CartItem.objects.get_or_create(cart=cart, item=item)
+    CartItem.objects.filter(cart=cart, item=item).update(qty = F('qty')+1)
     return redirect('cart')
 
 def remove_item(request, id):

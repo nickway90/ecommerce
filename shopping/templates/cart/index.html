@@ -9,6 +9,7 @@
 <p>Name: {{cart_item.item.name}}</p>
 <p>Description: {{cart_item.item.description}}</p>
 <p>Price: {{cart_item.item.price}}</p>
+<p>Quantity: {{cart_item.qty}}</p>
 <p><a href="{% url 'remove_item' cart_item.id %}">Remove Item</a></p>
 <hr>
 {% endfor %}
