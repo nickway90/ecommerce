@@ -1,14 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
 
 
 def index(request):
-    return HttpResponse('shopping index')
+    template = loader.get_template('shopping/index.html')
+    return HttpResponse(template.render())
 
 
 def cart(request):
-    return HttpResponse('shopping cart')
+    template = loader.get_template('cart/index.html')
+    return HttpResponse(template.render())
 
 
 def items(request):
-    return HttpResponse('shopping items')
+    template = loader.get_template('items/index.html')
+    return HttpResponse(template.render())
+
+
+def item(request, id):
+    template = loader.get_template('item/index.html')
+    return HttpResponse(template.render())
