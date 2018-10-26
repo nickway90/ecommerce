@@ -1,1 +1,10 @@
-<p>cart</p>
+<h1>Shopping Cart</h1>
+<p>{{cart.session_id}}</p>
+<p>{{cart.created_at}}</p>
+{% for cart_item in cart.cart_items.all %}
+<p>{{cart_item}}</p>
+<p>SKU: {{cart_item.item.sku}}</p>
+<p>Name: {{cart_item.item.name}}</p>
+<p>Description: {{cart_item.item.description}}</p>
+<p>Price: {{cart_item.item.price}}</p>
+{% endfor %}
