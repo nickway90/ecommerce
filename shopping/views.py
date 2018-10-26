@@ -36,3 +36,8 @@ def add_item(request, id):
         cart = Cart.objects.create(session_id=request.session.session_key)
     cart_item = CartItem.objects.create(cart=cart, item=item)
     return redirect('cart')
+
+def remove_item(request, id):
+    cart_item = get_object_or_404(CartItem, pk=id)
+    cart_item.delete()
+    return redirect('cart')
