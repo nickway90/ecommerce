@@ -6,3 +6,15 @@
 {% endfor %}
 </ul>
 <p>Total: <strong>{{cart.total}}</strong></p>
+
+<hr>
+
+<form action="{% url 'process' %}" method="POST">
+    {% csrf_token %}
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="pk_test_JqaiFr4mZjXgiGRd4BvkpKgz"
+      data-amount="{{cart.stripe_total}}"
+      data-locale="auto">
+    </script>
+  </form>

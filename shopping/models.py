@@ -29,6 +29,9 @@ class Cart(models.Model):
             t = t + (cart_item.qty * cart_item.item.price)
         return t
 
+    def stripe_total(self):
+        return int(self.total() * 100)
+
     def __str__(self):
         return 'Cart'
 

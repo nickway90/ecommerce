@@ -4,6 +4,7 @@ from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import F
 from .models import Item, Cart, CartItem
+from . import stripe
 
 
 def index(request):
@@ -59,3 +60,13 @@ def remove_all(request, id):
 def checkout(request):
     cart = get_object_or_404(Cart, session_id=request.session.session_key)
     return render(request, 'checkout/index.html', {'cart': cart})
+
+
+def process(request):
+    cart = get_object_or_404(Cart, session_id=request.session.session_key)
+    charge = stripe.Charge.create(
+        amount=cart.stripe_total(),
+        currency='usd',
+        source=request.POST['stripeToken']
+    )
+    return HttpResponse('Success!')
