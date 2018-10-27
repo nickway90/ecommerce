@@ -12,8 +12,9 @@ def index(request):
 
 
 def cart(request):
-    cart = Cart.objects.get(session_id=request.session.session_key)
-    if not cart:
+    try:
+        cart = Cart.objects.get(session_id=request.session.session_key)
+    except Cart.DoesNotExist:
         cart = Cart.objects.create(session_id=request.session.session_key)
     return render(request, 'cart/index.html', {'cart': cart})
 
@@ -67,6 +68,7 @@ def process(request):
                 currency='usd',
                 source=request.POST['stripeToken']
             )
+            cart.delete()
             return render(request, 'cart/process.html', {'charge': charge, 'cart': cart})
         except:
             pass

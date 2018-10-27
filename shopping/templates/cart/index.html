@@ -16,6 +16,7 @@
 <p><a href="{% url 'remove_all' cart_item.id %}">Remove All</a></p>
 <hr>
 {% endfor %}
+{% if cart.stripe_total > 0 %}
 <form action="{% url 'process' %}" method="POST">
     {% csrf_token %}
     <script
@@ -26,3 +27,4 @@
       data-locale="auto">
     </script>
 </form>
+{% endif %}
