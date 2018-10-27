@@ -57,16 +57,17 @@ def remove_all(request, id):
     return redirect('cart')
 
 
-def checkout(request):
-    cart = get_object_or_404(Cart, session_id=request.session.session_key)
-    return render(request, 'checkout/index.html', {'cart': cart})
-
-
 def process(request):
-    cart = get_object_or_404(Cart, session_id=request.session.session_key)
-    charge = stripe.Charge.create(
-        amount=cart.stripe_total(),
-        currency='usd',
-        source=request.POST['stripeToken']
-    )
-    return HttpResponse('Success!')
+    if request.method == 'POST':
+        try:
+            cart = get_object_or_404(
+                Cart, session_id=request.session.session_key)
+            charge = stripe.Charge.create(
+                amount=cart.stripe_total(),
+                currency='usd',
+                source=request.POST['stripeToken']
+            )
+            return render(request, 'cart/process.html', {'charge': charge, 'cart': cart})
+        except:
+            pass
+    return redirect('cart')

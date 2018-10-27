@@ -4,7 +4,6 @@
 <p>{{cart.created_at}}</p>
 <p>Items: {{cart.item_count}}</p>
 <p>Total: {{cart.total}}</p>
-<p><a href="{% url 'checkout' %}">Checkout</a></p>
 <hr>
 {% for cart_item in cart.cart_items.all %}
 <p>SKU: {{cart_item.item.sku}}</p>
@@ -17,3 +16,13 @@
 <p><a href="{% url 'remove_all' cart_item.id %}">Remove All</a></p>
 <hr>
 {% endfor %}
+<form action="{% url 'process' %}" method="POST">
+    {% csrf_token %}
+    <script
+      src="https://checkout.stripe.com/checkout.js" 
+      class="stripe-button"
+      data-key="pk_test_JqaiFr4mZjXgiGRd4BvkpKgz"
+      data-amount="{{cart.stripe_total}}"
+      data-locale="auto">
+    </script>
+</form>
