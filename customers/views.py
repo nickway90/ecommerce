@@ -1,15 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login as auth_login
 
 # Create your views here.
 
 def login(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['email'], password=request.POST['password'])
-        if user is None:
-            return render(request, 'login/index.html')
-    return redirect('../shopping')
+        if user is not None:
+            auth_login(request, user)
+            return redirect('../shopping')
+    return render(request, 'login/index.html')
 
 
 def register(request):
