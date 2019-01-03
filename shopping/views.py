@@ -58,6 +58,12 @@ def remove_all(request, id):
     return redirect('cart')
 
 
+def checkout(request):
+    cart = get_object_or_404(
+                Cart, session_id=request.session.session_key)
+    return render(request, 'cart/checkout.html', {'cart': cart})
+
+
 def process(request):
     if request.method == 'POST':
         try:
