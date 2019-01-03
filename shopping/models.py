@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
 class Item(models.Model):
@@ -15,6 +16,8 @@ class Item(models.Model):
 
 class Cart(models.Model):
     session_id = models.CharField(max_length=200)
+    customer = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="cart", null=True)
     created_at = models.DateTimeField(default=datetime.now, blank=True)
 
     def item_count(self):

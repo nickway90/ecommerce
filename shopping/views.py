@@ -61,9 +61,11 @@ def remove_all(request, id):
 def checkout(request):
     cart = get_object_or_404(
                 Cart, session_id=request.session.session_key)
-    print(request.user)
+    print(request.user.id)
     if not request.user.is_authenticated:
         return redirect('../../customers/login')
+    cart.customer = request.user
+    cart.save()
     return render(request, 'cart/checkout.html', {'cart': cart})
 
 
