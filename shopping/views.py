@@ -64,7 +64,7 @@ def checkout(request):
     return render(request, 'cart/checkout.html', {'cart': cart})
 
 
-def process(request):
+def confirmation(request):
     if request.method == 'POST':
         try:
             cart = get_object_or_404(
@@ -75,7 +75,7 @@ def process(request):
                 source=request.POST['stripeToken']
             )
             cart.delete()
-            return render(request, 'cart/process.html', {'charge': charge, 'cart': cart})
+            return render(request, 'cart/confirmation.html', {'charge': charge, 'cart': cart})
         except:
             pass
     return redirect('cart')
