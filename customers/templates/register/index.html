@@ -1,14 +1,15 @@
 <h1>New Customer</h1>
 <form method="POST">
+    {% csrf_token %}
     <table>
         <tbody>
             <tr>
                 <td>First</td>
-                <td style="text-align: right;"><input type="text" name="first" required></td>
+                <td style="text-align: right;"><input type="text" name="first_name" required></td>
             </tr>
             <tr>
                 <td>Last</td>
-                <td style="text-align: right;"><input type="text" name="last" required></td>
+                <td style="text-align: right;"><input type="text" name="last_name" required></td>
             </tr>
             <tr>
                 <td>Email</td>
