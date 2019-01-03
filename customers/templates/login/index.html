@@ -1,12 +1,7 @@
 <h1>Customer Login</h1>
 <form method="POST">
-    <p>
-        <input type="text" name="username">
-    </p>
-    <p>
-        <input type="password" name="password">
-    </p>
-    <p>
-        <button type="submit">Login</button>
-    </p>
+    <p><input type="email" name="email" placeholder="Email" required></p>
+    <p><input type="password" name="password" placeholder="Password" required></p>
+    <p><button type="submit">Login</button></p>
 </form>
+<p><a href="{% url 'register' %}">Register</a></p>

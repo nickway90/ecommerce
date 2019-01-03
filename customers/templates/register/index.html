@@ -1,0 +1,29 @@
+<h1>New Customer</h1>
+<form method="POST">
+    <table>
+        <tbody>
+            <tr>
+                <td>First</td>
+                <td style="text-align: right;"><input type="text" name="first" required></td>
+            </tr>
+            <tr>
+                <td>Last</td>
+                <td style="text-align: right;"><input type="text" name="last" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td style="text-align: right;"><input type="email" name="email" required></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td style="text-align: right;"><input type="password" name="password" required></td>
+            </tr>
+            <tr>
+                <td>Confirm</td>
+                <td style="text-align: right;"><input type="password" name="confirm-password" required></td>
+            </tr>
+        </tbody>
+    </table>
+    <p><button type="submit">Register</button></p>
+    <p><a href="{% url 'login' %}">Return to Login</a></p>
+</form>
