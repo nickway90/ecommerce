@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from django.template import loader
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import F
-from .models import Item, Cart, CartItem
+from .models import Item, Cart, CartItem, Order
 from . import stripe
 
 
@@ -71,7 +71,7 @@ def checkout(request):
 
 def confirmation(request):
     if request.method == 'POST':
-        try:
+        # try:
             cart = get_object_or_404(
                 Cart, session_id=request.session.session_key)
             charge = stripe.Charge.create(
@@ -79,8 +79,11 @@ def confirmation(request):
                 currency='usd',
                 source=request.POST['stripeToken']
             )
+            order = Order()
+            order.from_cart(cart)
+            order.save()
             cart.delete()
-            return render(request, 'cart/confirmation.html', {'charge': charge, 'cart': cart})
-        except:
-            pass
+            return render(request, 'cart/confirmation.html', {'charge': charge, 'order': order})
+        # except:
+            # pass
     return redirect('cart')

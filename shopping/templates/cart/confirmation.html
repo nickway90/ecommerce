@@ -1,7 +1,8 @@
 <h1>Checkout Complete</h1>
 <p>Order ID: {{charge.id}}</p>
-<p>Amount: {{cart.total}}</p>
+<p>Amount: {{order.total}}</p>
 <p>Payment: {{charge.source.brand}} - {{charge.source.last4}}</p>
 <p>Email: {{charge.source.name}}</p>
 <p><a href="{% url 'items' %}">Keep Shopping</a></p>
+<p><pre>{{order}}</pre></p>
 <p><pre>{{charge}}</pre></p>

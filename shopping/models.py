@@ -61,11 +61,12 @@ class Order(models.Model):
 
     def from_cart(self, cart):
         self.customer = cart.customer
-        self.total = cart.total
-        for cart_item in cart.cart_items:
+        self.total = cart.total()
+        self.save()
+        for cart_item in cart.cart_items.all():
             order_item = OrderItem()
             order_item.from_cart_item(cart_item)
-            self.order_items_set.add(order_item)
+            self.order_items.add(order_item, bulk=False)
 
 
 class OrderItem(models.Model):
@@ -86,7 +87,7 @@ class OrderItem(models.Model):
         self.description = cart_item.item.description
         self.price = cart_item.item.price
         self.qty = cart_item.qty
-        self.total = cart_item.total
+        self.total = cart_item.total()
 
 
 class OrderTransaction(models.Model):
