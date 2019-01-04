@@ -1,0 +1,24 @@
+<h3>Order #{{order.id}}</h3>
+<p>Date: {{order.created_at}}</p>
+<p>Amount: {{order.total}}</p>
+<p>Items: {{order.order_items.count}}</p>
+<table>
+    <thead>
+        <th>SKU</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Total</th>
+    </thead>
+    <tbody>
+        {% for item in order.order_items.all %}
+        <td>{{item.sku}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.qty}}</td>
+        <td>{{item.total}}</td>
+        {% endfor %}
+    </tbody>
+</table>

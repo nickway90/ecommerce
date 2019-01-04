@@ -60,7 +60,7 @@ def remove_all(request, id):
 
 def checkout(request):
     cart = get_object_or_404(
-                Cart, session_id=request.session.session_key)
+        Cart, session_id=request.session.session_key)
     print(request.user.id)
     if not request.user.is_authenticated:
         return redirect('../../customers/login')
@@ -71,19 +71,26 @@ def checkout(request):
 
 def confirmation(request):
     if request.method == 'POST':
-        # try:
-            cart = get_object_or_404(
-                Cart, session_id=request.session.session_key)
-            charge = stripe.Charge.create(
-                amount=cart.stripe_total(),
-                currency='usd',
-                source=request.POST['stripeToken']
-            )
-            order = Order()
-            order.from_cart(cart)
-            order.save()
-            cart.delete()
-            return render(request, 'cart/confirmation.html', {'charge': charge, 'order': order})
-        # except:
-            # pass
+        cart = get_object_or_404(
+            Cart, session_id=request.session.session_key)
+        charge = stripe.Charge.create(
+            amount=cart.stripe_total(),
+            currency='usd',
+            source=request.POST['stripeToken']
+        )
+        order = Order()
+        order.from_cart(cart)
+        order.save()
+        cart.delete()
+        return render(request, 'cart/confirmation.html', {'charge': charge, 'order': order})
     return redirect('cart')
+
+
+def order_list(request):
+    orders = Order.objects.filter(customer=request.user)
+    return render(request, 'orders/index.html', {'orders': orders})
+
+
+def view_order(request, id):
+    order = get_object_or_404(Order, pk=id)
+    return render(request, 'orders/view.html', {'order': order})

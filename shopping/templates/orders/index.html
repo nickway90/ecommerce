@@ -1,0 +1,22 @@
+<h3>Orders</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Items</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{order.created_at}}</td>
+            <td>{{order.total}}</td>
+            <td>{{order.order_items.count}}</td>
+            <td><a href="{% url 'view_order' order.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
