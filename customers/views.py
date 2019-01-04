@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
-from .forms import UserForm, EditUserForm
+from .forms import CreateUserForm, EditUserForm
 
 
 def login(request):
@@ -16,7 +16,7 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(
                 request.POST['email'],
@@ -26,7 +26,7 @@ def register(request):
             user.last_name = request.POST['last_name']
             user.save()
     else:
-        form = UserForm()
+        form = CreateUserForm()
     return render(request, 'user/create.html', {'form': form})
 
 
