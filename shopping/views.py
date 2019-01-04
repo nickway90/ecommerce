@@ -87,7 +87,7 @@ def confirmation(request):
 
 
 def order_list(request):
-    orders = Order.objects.filter(customer=request.user)
+    orders = Order.objects.filter(customer=request.user).order_by('-created_at')
     return render(request, 'orders/index.html', {'orders': orders})
 
 
