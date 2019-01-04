@@ -10,6 +10,7 @@
         <th>Price</th>
         <th>Qty</th>
         <th>Total</th>
+        <th></th>
     </thead>
     <tbody>
         {% for item in order.order_items.all %}
@@ -19,6 +20,7 @@
         <td>{{item.price}}</td>
         <td>{{item.qty}}</td>
         <td>{{item.total}}</td>
+        <td><a href="{% url 'item' item.item.id %}">View Item</a></td>
         {% endfor %}
     </tbody>
 </table>
