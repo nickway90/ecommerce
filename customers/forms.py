@@ -9,6 +9,12 @@ class UserForm(ModelForm):
         fields = ['first_name', 'last_name', 'email', 'password']
 
 
+class EditUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
 class UserAddressForm(ModelForm):
     class Meta:
         model = UserAddress
