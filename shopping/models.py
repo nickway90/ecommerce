@@ -31,7 +31,7 @@ class Cart(models.Model):
         t = 0
         for cart_item in self.cart_items.all():
             t = t + (cart_item.qty * cart_item.item.price)
-        return t
+        return round(t, 2)
 
     def stripe_total(self):
         return int(self.total() * 100)
@@ -48,7 +48,7 @@ class CartItem(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=True)
 
     def total(self):
-        return self.qty * self.item.price
+        return round(self.qty * self.item.price, 2)
 
     def __str__(self):
         return '{} ({})'.format(self.item.name, self.qty)
