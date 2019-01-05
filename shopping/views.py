@@ -81,6 +81,7 @@ def confirmation(request):
         order = Order()
         order.from_cart(cart)
         order.save()
+        order.add_transaction(charge.id)
         cart.delete()
         return render(request, 'cart/confirmation.html', {'charge': charge, 'order': order})
     return redirect('cart')

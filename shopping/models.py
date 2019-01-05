@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+from . import stripe
 
 
 class Item(models.Model):
@@ -68,6 +69,12 @@ class Order(models.Model):
             order_item.from_cart_item(cart_item)
             self.order_items.add(order_item, bulk=False)
 
+    
+    def add_transaction(self, transaction_id):
+        order_transaction = OrderTransaction(transaction_id=transaction_id)
+        self.order_transactions.add(order_transaction, bulk=False)
+        self.save()
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
@@ -91,6 +98,12 @@ class OrderItem(models.Model):
 
 
 class OrderTransaction(models.Model):
+    _stripe = None
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name="order_transactions")
     transaction_id = models.CharField(max_length=150)
+
+    def stripe(self):
+        if self._stripe is None:
+            self._stripe = stripe.Charge.retrieve(self.transaction_id)
+        return self._stripe

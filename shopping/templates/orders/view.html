@@ -1,7 +1,8 @@
 <h3>Order #{{order.id}}</h3>
-<p>Date: {{order.created_at}}</p>
-<p>Amount: {{order.total}}</p>
-<p>Items: {{order.order_items.count}}</p>
+<h4>Date: {{order.created_at}}</h4>
+<h4>Total: {{order.total}}</h4>
+<hr>
+<h4>Items ({{order.order_items.count}})</h4>
 <table>
     <thead>
         <th>SKU</th>
@@ -22,6 +23,34 @@
             <td>{{item.qty}}</td>
             <td>{{item.total}}</td>
             <td><a href="{% url 'item' item.item.id %}">View Item</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<hr>
+<h4>Payments ({{order.order_transactions.count}})</h4>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Amount</th>
+            <th colspan="3">Card</th>
+        </tr>
+        <tr>
+            <th colspan="2"></th>
+            <th>Type</th>
+            <th>Last 4</th>
+            <th>Expires</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for txn in order.order_transactions.all %}
+        <tr>
+            <td>{{txn.transaction_id}}</td>
+            <td>{{txn.stripe.amount}}</td>
+            <td>{{txn.stripe.source.brand}}</td>
+            <td>{{txn.stripe.source.last4}}</td>
+            <td>{{txn.stripe.source.exp_month}}/{{txn.stripe.source.exp_year}}</td>
         </tr>
         {% endfor %}
     </tbody>
