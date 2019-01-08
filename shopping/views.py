@@ -67,7 +67,7 @@ def checkout(request):
         return redirect('../../customers/login')
     cart.customer = request.user
     cart.save()
-    return render(request, 'cart/checkout.html', {'cart': cart, 'stripe_key': os.environ.get('PUBLISHABLE_KEY')})
+    return render(request, 'cart/checkout.html', {'cart': cart, 'stripe_key': os.environ.get('STRIPE_PUBLISHABLE_KEY')})
 
 
 def confirmation(request):
