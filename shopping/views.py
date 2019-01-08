@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import F
 from .models import Item, Cart, CartItem, Order
 from . import stripe
+import os
 
 
 def index(request):
@@ -66,7 +67,7 @@ def checkout(request):
         return redirect('../../customers/login')
     cart.customer = request.user
     cart.save()
-    return render(request, 'cart/checkout.html', {'cart': cart})
+    return render(request, 'cart/checkout.html', {'cart': cart, 'stripe_key': os.environ.get('PUBLISHABLE_KEY')})
 
 
 def confirmation(request):
