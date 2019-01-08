@@ -26,6 +26,7 @@ services:
       - "8080:80"
     volumes:
       - ./conf.d:/etc/nginx/conf.d
+      - ./static:/static
     networks:
       - web_nw
     depends_on: 
